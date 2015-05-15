@@ -21,6 +21,10 @@ app.get('/user', function (req, res) {
     res.json(users.findAll());
 });
 
+app.get('/test', function (req, res) {
+    res.send('Hello Test master');
+});
+
 app.get('/user/:id', function (req, res) {
     var id = req.params.id;
     res.json(users.findById(id));
