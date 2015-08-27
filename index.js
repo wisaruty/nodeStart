@@ -3,6 +3,14 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 7777;
+var mysql = require('mysql');
+
+var connection =  mysql.createConnection({
+  host : 'localhost',
+  user : 'root',
+  password : 'root',
+  database : 'testdb'
+});
 
 // parse application/json
 app.use(bodyParser.json());
@@ -36,6 +44,16 @@ app.post('/newuser', function (req, res) {
     res.send('Add new ' + json.name + ' Completed!');
 });
 
+app.get('/conn', function (req, res) {
+  connection.query('SELECT * FROM users', function(err, rows){
+    if (err) {
+      throw err;
+    }
+    res.json(rows);
+  })
+});
+
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);
 });
+
